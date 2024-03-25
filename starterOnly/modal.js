@@ -65,7 +65,6 @@ function validateForm() {
     removeErrorMessage(birthdate.parentElement);
   }
 
-
   // Validation du nombre de concours
   const quantityValue = parseInt(quantity.value.trim());
   if (isNaN(quantityValue) || quantityValue < 0 || quantityValue > 99) {
@@ -98,14 +97,6 @@ function validateForm() {
     removeErrorMessage(checkbox1.parentElement);
   }
 
-  
-  // Si elle est cochée et que les autres sont valides, sauvegarder dans le localStorage
-  const wishToBeNotified = checkbox2.checked;
-  if (isValid) {
-    localStorage.setItem('wishToBeNotified', 'true');
-  }
-
-  // Retourner l'état de validation global
   return isValid;
 }
 
@@ -132,43 +123,44 @@ function closeModalHandler() {
   modalbg.style.display = "none";
 }
 
+// Fonction pour afficher le modal de réussite et fermer l'autre modal
+function toggleModal() {
+
+  document.querySelectorAll('.modal-body').forEach(modal => {
+    modal.classList.toggle('modal-open')
+  })
+
+  // Fermer le modal actuel
+  // closeModalHandler();
+  
+  // Afficher le modal de réussite
+  // const successModal = document.getElementById('successModal');
+  // successModal.style.display = 'block';
+}
+
+// Fonction pour vérifier le formulaire et afficher le modal de réussite si tout est ok
+function checkAndDisplaySuccessModal() {
+  // Appeler la fonction de validation
+  if (validateForm()) {
+    // Afficher les données du formulaire dans la console
+    displayFormData();
+    // Afficher le modal de réussite
+    toggleModal();
+  }
+}
+
 // Ajouter un gestionnaire d'événements au bouton "C'est parti"
-const submitButton = document.querySelector('.btn-submit');
+const submitButton = document.querySelector('#btn-submit');
 submitButton.addEventListener('click', function(event) {
   event.preventDefault();
   
-  // Appeler la fonction de validation
-  if (validateForm()) {
-    
-    // Afficher un message de succès
-    alert("Merci ! Votre réservation a été reçue.");
-
-    // Obtenir les données existantes du localStorage s'il y en a
-    let existingData = JSON.parse(localStorage.getItem('formData')) || {};
-
-    // Sauvegarde des données du formulaire dans le localStorage
-    const form = document.getElementsByName("reserve")[0]; // Accéder au premier élément de la NodeList
-    const formData = {
-      firstName: form.elements["first"].value,
-      lastName: form.elements["last"].value,
-      email: form.elements["email"].value,
-      birthdate: form.elements["birthdate"].value,
-      quantity: form.elements["quantity"].value,
-      location: getSelectedLocation(),
-      agreementChecked: form.elements["checkbox1"].checked,
-      wishToBeNotified: form.elements["checkbox2"].checked
-    };
-
-    // Combiner les nouvelles données du formulaire avec les données existantes
-    const updatedData = {...existingData, ...formData};
-
-    // Sauvegarder les données combinées dans le localStorage
-    localStorage.setItem('formData', JSON.stringify(updatedData));
-
-    // Fermer le modal
-    closeModalHandler();
-  }
+  // Appeler la fonction pour vérifier le formulaire et afficher le modal de réussite si tout est ok
+  checkAndDisplaySuccessModal();
 });
+
+document.querySelector('#btn-close-modal').addEventListener('click', function() {
+  closeModalHandler()
+})
 
 // Fonction pour obtenir la ville sélectionnée
 function getSelectedLocation() {
@@ -185,4 +177,22 @@ function getSelectedLocation() {
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
+}
+
+// Fonction pour afficher les données du formulaire dans la console
+function displayFormData() {
+  const form = document.getElementsByName("reserve")[0]; // Accéder au premier élément de la NodeList
+
+  const formData = {
+    firstName: form.elements["first"].value.trim(),
+    lastName: form.elements["last"].value.trim(),
+    email: form.elements["email"].value.trim(),
+    birthdate: form.elements["birthdate"].value.trim(),
+    quantity: form.elements["quantity"].value.trim(),
+    location: getSelectedLocation(),
+    checkbox1: form.elements["checkbox1"].checked,
+    checkbox2: form.elements["checkbox2"].checked
+  };
+
+  console.log("Données du formulaire:", formData);
 }

@@ -181,11 +181,17 @@ main {
   position: relative;
   color: #fff;
   padding-top: 10px;
+  min-height: 70%
 }
 
 .modal-body {
+  display: none;
   padding: 15px 8%;
   margin: 15px auto;
+}
+
+.modal-open {
+  display: block;
 }
 
 label {
@@ -225,6 +231,21 @@ input {
 }
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
+}
+
+.successText{
+  display: flex;
+  justify-content: center;
+  font-size: 46.3px;
+  text-align: center;
+  padding-top: 46%;
+  padding-bottom: 50%;
+}
+
+#btn-close-modal {
+  display: flex;
+  align-content: flex-end;
+  align-items: end;
 }
 /* 
 input[data-error]::after {
@@ -478,7 +499,7 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 950px) {
   .hero-section {
     display: block;
     box-shadow: unset;
@@ -495,12 +516,12 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 143%;
     white-space: normal;
   }
   .hero-text {
-    width: unset;
-    font-size: 1.5rem;
+    width: 75%;
+    font-size: 49%;
   }
   .hero-img img {
     border-radius: 10px;
