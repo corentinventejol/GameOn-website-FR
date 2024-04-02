@@ -92,14 +92,7 @@ img {
 
 
 
- @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-} 
+
 
 main {
   font-size: 130%;
@@ -547,4 +540,29 @@ footer {
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 540px) {
+  .topnav a {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+  .bground {
+    background-color: transparent;
+  }
+  .content {
+    max-height: 100%;
+    bottom: -8%;
+    border-radius: 10px 10px 0 0;
+    padding-top: 0;
+    margin: 20px 0 0 0;
+  }
+  .successText {
+    padding-top: 76%;
+    padding-bottom: 74%;
+  }
+  .hero-section {
+    min-height: 0;
+  }
+} 
 
